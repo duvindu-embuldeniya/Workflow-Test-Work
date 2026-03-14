@@ -64,4 +64,4 @@ jobs:
           key: ${{ secrets.LINODE_SSH_KEY }}
           script: |
             cd /opt/clickmart
-            docker compose -f rollback.yml up -d
+            docker compose -f docker-compose.prod.yml up -d
