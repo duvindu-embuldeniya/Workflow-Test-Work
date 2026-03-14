@@ -29,13 +29,13 @@ jobs:
 
       - name: Build & Push Backend Image
         run: |
-          docker build -t $DOCKERHUB_USERNAME/myapp:django-$IMAGE_TAG ./backend
-          docker push $DOCKERHUB_USERNAME/myapp:django-$IMAGE_TAG
+          docker build -t duvindune/clickmart-backend:$IMAGE_TAG ./backend
+          docker push duvindune/clickmart-backend:$IMAGE_TAG
 
       - name: Build & Push Frontend Image
         run: |
-          docker build -t $DOCKERHUB_USERNAME/react-frontend:$IMAGE_TAG ./frontend
-          docker push $DOCKERHUB_USERNAME/react-frontend:$IMAGE_TAG
+          docker build -t duvindune/clickmart-frontend:$IMAGE_TAG ./frontend
+          docker push duvindune/clickmart-frontend:$IMAGE_TAG
 
       - name: Deploy to Linode via SSH
         uses: appleboy/ssh-action@v1.0.3
@@ -46,8 +46,8 @@ jobs:
           script: |
             cd /opt/clickmart
             git pull origin main
-            # Pull images with current run number tag
-            docker pull $DOCKERHUB_USERNAME/myapp:django-$IMAGE_TAG
-            docker pull $DOCKERHUB_USERNAME/react-frontend:$IMAGE_TAG
+            # Pull images with workflow run tag
+            docker pull duvindune/clickmart-backend:$IMAGE_TAG
+            docker pull duvindune/clickmart-frontend:$IMAGE_TAG
             # Update containers using the tagged images
             docker compose up -d
