@@ -50,4 +50,4 @@ jobs:
             docker pull duvindune/clickmart-backend:$IMAGE_TAG
             docker pull duvindune/clickmart-frontend:$IMAGE_TAG
             # Update containers using the tagged images
-            docker compose up -d
+            docker compose up --build -d
