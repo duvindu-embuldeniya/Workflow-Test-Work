@@ -108,13 +108,13 @@ jobs:
 
       - name: Build & Push Backend Image to GAR
         run: |
-          docker build -t "${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${BACKEND_REPO}/backend:${IMAGE_TAG}" ./backend
-          docker push "${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${BACKEND_REPO}/backend:${IMAGE_TAG}"
+          docker build -t ${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${BACKEND_REPO}/backend:${IMAGE_TAG} ./backend
+          docker push ${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${BACKEND_REPO}/backend:${IMAGE_TAG}
 
       - name: Build & Push Frontend Image to GAR
         run: |
-          docker build -t "${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${FRONTEND_REPO}/frontend:${IMAGE_TAG}" ./frontend
-          docker push "${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${FRONTEND_REPO}/frontend:${IMAGE_TAG}"
+          docker build -t ${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${FRONTEND_REPO}/frontend:${IMAGE_TAG} ./frontend
+          docker push ${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${FRONTEND_REPO}/frontend:${IMAGE_TAG}
 
       - name: Deploy to Linode via SSH
         uses: appleboy/ssh-action@v1.0.3
