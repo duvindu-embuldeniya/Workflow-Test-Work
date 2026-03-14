@@ -57,7 +57,7 @@ jobs:
     if: "contains(github.event.head_commit.message, 'rollback')"
     runs-on: ubuntu-latest
     env:
-      ROLLBACK_TAG: '7'  # <- define rollback tag here
+      ROLLBACK_TAG: '14'  # <- define rollback tag here
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       BACKEND_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/clickmart-backend:$ROLLBACK_TAG
       FRONTEND_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/clickmart-frontend:$ROLLBACK_TAG

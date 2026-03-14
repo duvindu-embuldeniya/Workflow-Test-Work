@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   backend:
-    image: duvindu/clickmart-backend:7   # rollback tag hardcoded
+    image: duvindu/clickmart-backend:14   # rollback tag hardcoded
     container_name: django_backend_container
     command: >
       sh -c "sleep 10 &&
@@ -11,7 +11,7 @@ services:
              gunicorn backend_rnd.wsgi:application --bind 0.0.0.0:8000 --timeout 5 --threads 10"
 
   frontend:
-    image: duvindu/clickmart-frontend:7  # rollback tag hardcoded
+    image: duvindu/clickmart-frontend:14  # rollback tag hardcoded
     container_name: react_frontend_container
     depends_on:
       - backend
