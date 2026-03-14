@@ -59,9 +59,7 @@ jobs:
     env:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-      ROLLBACK_TAG: '14'  # rollback tag you want
-      BACKEND_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/clickmart-backend:14
-      FRONTEND_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/clickmart-frontend:14
+      ROLLBACK_TAG: '14'  # change to the tag you want to rollback to
     steps:
       - name: Rollback Deployment to Linode
         uses: appleboy/ssh-action@v1.0.3
@@ -72,13 +70,17 @@ jobs:
           script: |
             cd /opt/clickmart
 
-            # Docker login on Linode using env vars
-            docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+            # Define rollback images using env vars
+            BACKEND_IMAGE=${DOCKERHUB_USERNAME}/clickmart-backend:${ROLLBACK_TAG}
+            FRONTEND_IMAGE=${DOCKERHUB_USERNAME}/clickmart-frontend:${ROLLBACK_TAG}
+
+            # Login to Docker Hub (non-interactive)
+            echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
 
             # Stop and remove old containers
             docker compose -f docker-compose.rollback.yml down -v
 
-            # Pull rollback images using env vars
+            # Pull rollback images
             docker pull $BACKEND_IMAGE
             docker pull $FRONTEND_IMAGE
 
