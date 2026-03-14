@@ -59,7 +59,7 @@ jobs:
     env:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-      ROLLBACK_TAG: '14'  # rollback tag you want
+      ROLLBACK_TAG: '15'  # rollback tag you want
       BACKEND_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/clickmart-backend:14
       FRONTEND_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/clickmart-frontend:14
     steps:
