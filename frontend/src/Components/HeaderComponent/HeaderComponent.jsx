@@ -6,7 +6,7 @@ const HeaderComponent = () => {
   return (
     <>
        <nav className='navbar container pt-3 pb-3 rounded align-items-start'>
-            <Link to="/" className='navbar-brand text-light'>Portal..7</Link>
+            <Link to="/" className='navbar-brand text-light'>Portal..xxx</Link>
 
             <div>
                 <ButtonComponent url='/login' text='login' class='btn btn-outline-info' />
