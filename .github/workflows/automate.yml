@@ -174,11 +174,14 @@ jobs:
           script: |
             cd /opt/clickmart
 
+            # Stop and remove old containers
             docker compose down -v
 
             # Pull the rollback images
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/clickmart-backend:${{ env.ROLLBACK_TAG }}
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/clickmart-frontend:${{ env.ROLLBACK_TAG }}
 
-            # Run using pulled images without rebuilding
-            docker compose up -d --force-recreate --no-build
+            # Run containers using the pulled images explicitly (ignore build section)
+            docker compose up -d --force-recreate \
+              backend=${{ secrets.DOCKERHUB_USERNAME }}/clickmart-backend:${{ env.ROLLBACK_TAG }} \
+              frontend=${{ secrets.DOCKERHUB_USERNAME }}/clickmart-frontend:${{ env.ROLLBACK_TAG }}
