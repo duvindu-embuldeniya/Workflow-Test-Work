@@ -56,12 +56,6 @@ jobs:
   rollback:
     if: "contains(github.event.head_commit.message, 'rollback')"
     runs-on: ubuntu-latest
-    env:
-      ROLLBACK_TAG: '14'  # rollback tag you want
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-      BACKEND_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/clickmart-backend:$ROLLBACK_TAG
-      FRONTEND_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/clickmart-frontend:$ROLLBACK_TAG
     steps:
       - name: Rollback Deployment to Linode
         uses: appleboy/ssh-action@v1.0.3
@@ -72,15 +66,15 @@ jobs:
           script: |
             cd /opt/clickmart
 
-            # Login to Docker Hub on Linode
-            echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            # Docker login on Linode
+            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
 
             # Stop and remove old containers
             docker compose -f docker-compose.rollback.yml down -v
 
-            # Pull the rollback images using env vars
-            docker pull $BACKEND_IMAGE
-            docker pull $FRONTEND_IMAGE
+            # Pull rollback images directly
+            docker pull duvindu/clickmart-backend:14
+            docker pull duvindu/clickmart-frontend:14
 
-            # Start containers using rollback Compose file
+            # Start containers using rollback compose file
             docker compose -f docker-compose.rollback.yml up -d --force-recreate --no-build
