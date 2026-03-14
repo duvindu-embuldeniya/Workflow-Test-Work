@@ -108,7 +108,7 @@ on:
 
 env:
   # Default rollback tag (can change if needed)
-  ROLLBACK_TAG: '8'
+  ROLLBACK_TAG: '7'
 
 jobs:
 
