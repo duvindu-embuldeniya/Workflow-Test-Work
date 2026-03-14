@@ -1,4 +1,4 @@
-name: Build & Deploy to Linode
+name: Build / Deploy / Rollback
 
 on:
   push:
@@ -6,7 +6,9 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+
+  deploy:
+    if: "!contains(github.event.head_commit.message, 'rollback')"
     runs-on: ubuntu-latest
 
     env:
@@ -46,5 +48,20 @@ jobs:
           script: |
             cd /opt/clickmart
             git pull origin main
-
             docker compose -f docker-compose.prod.yml up -d
+
+
+  rollback:
+    if: "contains(github.event.head_commit.message, 'rollback')"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Rollback on Linode
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.LINODE_HOST }}
+          username: ${{ secrets.LINODE_USER }}
+          key: ${{ secrets.LINODE_SSH_KEY }}
+          script: |
+            cd /opt/clickmart
+            docker compose -f rollback.yml up -d
