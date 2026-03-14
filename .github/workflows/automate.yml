@@ -45,9 +45,4 @@ jobs:
           key: ${{ secrets.LINODE_SSH_KEY }}
           script: |
             cd /opt/clickmart
-            git pull origin main
-
-            docker pull duvindune/clickmart-backend:$IMAGE_TAG
-            docker pull duvindune/clickmart-frontend:$IMAGE_TAG
-
             docker compose -f docker-compose.prod.yml up -d
