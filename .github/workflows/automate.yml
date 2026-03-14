@@ -84,10 +84,10 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      GCP_REGION: ${{ secrets.GCP_REGION }}               
-      GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}       
-      BACKEND_REPO: ${{ secrets.GAR_BACKEND_REPO }}      
-      FRONTEND_REPO: ${{ secrets.GAR_FRONTEND_REPO }}    
+      GCP_REGION: ${{ secrets.GCP_REGION }}               # e.g., asia-south1
+      GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}       # your GCP project
+      BACKEND_REPO: ${{ secrets.GAR_BACKEND_REPO }}      # e.g., clickmart-backend
+      FRONTEND_REPO: ${{ secrets.GAR_FRONTEND_REPO }}    # e.g., clickmart-frontend
       IMAGE_TAG: ${{ github.run_number }}
 
     steps:
@@ -108,13 +108,13 @@ jobs:
 
       - name: Build & Push Backend Image to GAR
         run: |
-          docker build -t ${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${BACKEND_REPO}/backend:${IMAGE_TAG} ./backend
-          docker push ${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${BACKEND_REPO}/backend:${IMAGE_TAG}
+          docker build -t "${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${BACKEND_REPO}/backend:${IMAGE_TAG}" ./backend
+          docker push "${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${BACKEND_REPO}/backend:${IMAGE_TAG}"
 
       - name: Build & Push Frontend Image to GAR
         run: |
-          docker build -t ${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${FRONTEND_REPO}/frontend:${IMAGE_TAG} ./frontend
-          docker push ${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${FRONTEND_REPO}/frontend:${IMAGE_TAG}
+          docker build -t "${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${FRONTEND_REPO}/frontend:${IMAGE_TAG}" ./frontend
+          docker push "${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${FRONTEND_REPO}/frontend:${IMAGE_TAG}"
 
       - name: Deploy to Linode via SSH
         uses: appleboy/ssh-action@v1.0.3
@@ -140,4 +140,3 @@ jobs:
           script: |
             cd /opt/clickmart
             git pull origin main
-            docker compose -f docker-compose.prod.yml up -d
