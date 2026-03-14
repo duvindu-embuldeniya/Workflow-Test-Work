@@ -85,7 +85,7 @@ jobs:
 
     env:
       GCP_REGION: ${{ secrets.GCP_REGION }}               # e.g., asia-south1
-      GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}       # your GCP project
+      GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}       # your GCP project ID
       BACKEND_REPO: ${{ secrets.GAR_BACKEND_REPO }}      # e.g., clickmart-backend
       FRONTEND_REPO: ${{ secrets.GAR_FRONTEND_REPO }}    # e.g., clickmart-frontend
       IMAGE_TAG: ${{ github.run_number }}
