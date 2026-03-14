@@ -46,11 +46,8 @@ jobs:
           script: |
             cd /opt/clickmart
             git pull origin main
-            export IMAGE_TAG=${{ github.run_number }}
-            # Pull the exact images
+
             docker pull duvindune/clickmart-backend:$IMAGE_TAG
             docker pull duvindune/clickmart-frontend:$IMAGE_TAG
-            # Run Compose using the pulled images only (override build)
-            docker compose up -d \
-              backend=duvindune/clickmart-backend:$IMAGE_TAG \
-              frontend=duvindune/clickmart-frontend:$IMAGE_TAG
+
+            IMAGE_TAG=$IMAGE_TAG docker compose -f docker-compose.prod.yml up -d
