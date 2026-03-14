@@ -181,7 +181,9 @@ jobs:
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/clickmart-backend:${{ env.ROLLBACK_TAG }}
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/clickmart-frontend:${{ env.ROLLBACK_TAG }}
 
-            # Run containers using the pulled images explicitly (ignore build section)
-            docker compose up -d --force-recreate \
-              backend=${{ secrets.DOCKERHUB_USERNAME }}/clickmart-backend:${{ env.ROLLBACK_TAG }} \
-              frontend=${{ secrets.DOCKERHUB_USERNAME }}/clickmart-frontend:${{ env.ROLLBACK_TAG }}
+            # Override images temporarily using environment variable for Compose
+            export COMPOSE_DOCKER_CLI_BUILD=0
+            export DOCKER_BUILDKIT=0
+
+            # Run containers using pulled images (ignore local build)
+            docker compose up -d --force-recreate --no-build
