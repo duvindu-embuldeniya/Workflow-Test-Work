@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   backend:
-    image: asia-south11111111-docker.pkg.dev/test-project-1-666666666/backend/backend:65
+    image: asia-south1-docker.pkg.dev/test-project-1-490216/backend/backend:66
     container_name: django_backend_container
     command: >
       sh -c "sleep 10 &&
@@ -12,7 +12,7 @@ services:
              gunicorn backend_rnd.wsgi:application --bind 0.0.0.0:8000 --timeout 5 --threads 10"
 
   frontend:
-    image: asia-south11111111-docker.pkg.dev/test-project-1-4902166666666/frontend/frontend:65
+    image: asia-south1-docker.pkg.dev/test-project-1-490216/frontend/frontend:66
     container_name: react_frontend_container
     depends_on:
       - backend
