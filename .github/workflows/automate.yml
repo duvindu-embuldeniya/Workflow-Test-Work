@@ -50,4 +50,4 @@ jobs:
             docker pull duvindune/clickmart-backend:$IMAGE_TAG
             docker pull duvindune/clickmart-frontend:$IMAGE_TAG
 
-            IMAGE_TAG=$IMAGE_TAG docker compose -f docker-compose.prod.yml up -d
+            docker compose -f docker-compose.prod.yml up -d
