@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   backend:
-    image: duvindune/clickmart-backend:40
+    image: duvindune/clickmart-backend:41
     container_name: django_backend_container
     command: >
       sh -c "sleep 10 &&
@@ -11,7 +11,7 @@ services:
              gunicorn backend_rnd.wsgi:application --bind 0.0.0.0:8000 --timeout 5 --threads 10"
 
   frontend:
-    image: duvindune/clickmart-frontend:39
+    image: duvindune/clickmart-frontend:41
     container_name: react_frontend_container
     depends_on:
       - backend
