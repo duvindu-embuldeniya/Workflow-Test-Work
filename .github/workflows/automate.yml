@@ -57,8 +57,9 @@ jobs:
     if: "contains(github.event.head_commit.message, 'rollback')"
     runs-on: ubuntu-latest
     env:
-      ROLLBACK_TAG: '14'  # <- define rollback tag here
+      ROLLBACK_TAG: '14'  # rollback tag you want
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
       BACKEND_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/clickmart-backend:$ROLLBACK_TAG
       FRONTEND_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/clickmart-frontend:$ROLLBACK_TAG
     steps:
@@ -70,6 +71,9 @@ jobs:
           key: ${{ secrets.LINODE_SSH_KEY }}
           script: |
             cd /opt/clickmart
+
+            # Login to Docker Hub on Linode
+            echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
 
             # Stop and remove old containers
             docker compose -f docker-compose.rollback.yml down -v
