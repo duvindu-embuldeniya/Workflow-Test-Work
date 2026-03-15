@@ -1,16 +1,27 @@
+# Verify gcloud installation
 gcloud --version
+
+# Login to Google Cloud
 gcloud auth login
 
-Verify login:
+# Check authenticated account
 gcloud auth list
 
-Set Your Project:
-gcloud config set project test-1-489707
+# Verify current gcloud configuration
+gcloud config list
 
-Enable Artifact Registry API(console)
+# Set your project
+gcloud config set project test-project-1-490216
 
+# Enable required APIs via console.../
+
+# Configure Docker authentication for Artifact Registry
 gcloud auth configure-docker asia-south1-docker.pkg.dev
 
+# Create Artifact Registry via console.../
+
+# Verify repositories
+gcloud artifacts repositories list
 
 
 
